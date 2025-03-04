@@ -1,0 +1,56 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Ajuste conforme necessário
+
+      - name: Instalar Dependências e Fazer Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Criar um diretório temporário e copiar arquivos (exceto .env e node_modules)
+        run: |
+          mkdir -p /tmp/material-web-deploy
+          rsync -av --exclude='.env.local' --exclude='.env' --exclude='node_modules' . /tmp/material-web-deploy/
+
+      - name: Compactar os arquivos para envio
+        run: tar -czf material-web.tar.gz -C /tmp/material-web-deploy . 
+
+      - name: Enviar arquivos via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          source: "material-web.tar.gz"
+          target: "/home/ubuntu/projects/material-web"
+
+      - name: Conectar na VPS e configurar a aplicação
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          script: |
+            cd /home/ubuntu/projects/material-web
+            tar -xzf material-web.tar.gz
+            rm material-web.tar.gz
+            npm install --omit=dev
+            pm2 delete material-web-next || true  # Remove completamente o processo
+            pm2 start npm --name "material-web-next" --cwd /home/ubuntu/projects/material-web -- run start
+            pm2 save

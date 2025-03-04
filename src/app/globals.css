@@ -1,0 +1,402 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/*#region Estilos Gerais */
+body{
+  min-height: 100%;
+}
+
+.bg-red{
+  background-color: #DC2626;
+}
+
+.nunito{
+  font-family: "Nunito";
+}
+
+.separator{
+  border-bottom: 2px solid rgb(238, 238, 238);
+  margin: 3rem 0rem 2.35rem 0rem;
+  width: 100%;
+}
+
+.iconHover:hover{
+  cursor: pointer;
+  transition: 200ms;
+  transform: scale(1.07);
+}
+/*#endregion*/
+
+/*#region Estilos do DarkMode */
+.dark{
+  background-color: rgb(20, 20, 20);
+  color: white ;
+}
+
+.dark span, p{
+  color: white ;
+}
+
+.dark svg{
+  color: white !important;
+}
+
+.dark h2.title-red{
+  color: white !important;
+}
+
+.dark aside{
+  background-color: #292929;
+}
+
+.dark aside nav ul li a{
+  color: white;
+}
+
+.dark .bg-red-100{
+  background-color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+
+.dark #menuFixedMobile{
+  background-color: black;
+  color: white;
+}
+
+.light span, p, svg{
+  color: rgb(0, 0, 0) ;
+}
+
+.language-java span{
+  color: white ;
+}
+
+body.dark li::marker, body.dark ol li{
+  color: white;
+}
+
+.summaryCard div p{
+  margin-bottom: 8px;
+}
+
+body.dark .summaryCard div p{
+  color: white;
+  
+}
+
+body.dark .leading-8 p{
+  color: white;
+}
+
+body.dark .accordion-circle, .subtitle{
+  color: white;
+  font-weight: 800;
+}
+
+body.dark .card-page svg{
+  color: #DC2626 !important;
+}
+
+
+/*#endregion*/
+
+/*#region Estilos do Iframe dos videos */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  max-height: 600px;
+  max-width: 1250px;
+
+}
+/*#endregion*/
+
+/*#region Estilos do Titulo Personalizado */
+.title-red::after {
+  content: "";
+  display: block;
+  width: 57px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #DC2626;
+  margin-top: 30px;
+  margin-bottom: 0 !important;
+}
+
+.subtitle-main {
+	color: #7C7A80;
+	font-weight: normal;
+}
+
+.light .subtitle {
+	color: #000000;
+	font-weight: 800;
+}
+
+.canalSubtitle {
+	font-weight: 700;
+	color: #DC2626;
+}
+
+.canalSubtitle::before,
+.canalSubtitle::after {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 3px;
+	vertical-align: middle;
+	background-color: #DC2626;
+	margin: 0px 10px 3px 10px;
+	border-radius: 10px;
+}
+
+.titleMaterial{
+  font-weight: 600;
+  
+}
+
+.titleMaterial::after{
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 10px;
+  background-color: #D8D8D8;
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+}
+/*#endregion*/
+
+/*#region Estilos do Card de Menu da Home */
+.card-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 1.98px 9.47px 0px rgba(0, 0, 0, 0.25);
+  border-bottom: 4px solid #DC2626;
+  margin: 10px;
+  margin-top: 10px;
+  min-width: 295px;
+  max-width: 315px;
+  min-height: 157px;
+  padding: 3%;
+  transition: all 500ms;
+}
+
+.card-page:hover {
+  cursor: pointer;
+  background-color: #DC2626;
+}
+.card-page:hover .avatar-card {
+  background-color: #fff;
+}
+
+.card-page:hover h3{
+  color: #fff;
+}
+
+.card-page:hover p{
+  color: #fff;
+}
+
+.avatar-card {
+  border-radius: 50%;
+  background-color: #f33d3d23;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:  500ms;
+}
+
+.avatar-icon {
+  color:#DC2626;
+  font-size: 35px;
+  text-align: center;
+}
+
+/*#endregion*/
+
+
+/*#region Estilos do Accordion circle Header Home */
+.accordion-circle{
+  min-width: 30px;
+  min-height: 28px;
+  border-radius: 50%;
+  font-size: 13px;
+  border: 1px solid #DC2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #DC2626;
+  margin-right: 1rem;
+}
+
+.span-accordion-circle{
+  border: 1px solid #DC2626;
+  padding: 5px 14px;
+  border-radius: 50%;
+  font-size: 21px;
+  position: relative;
+  bottom: 3px;
+  left: 5px;
+  color: #DC2626 !important;
+}
+
+#accordion-open-heading-1.opened .accordion-circle{
+
+  background-color: #DC2626;
+  color: white;
+}
+
+#accordion-open-heading-1.opened span.nunito{
+  color: #DC2626;
+}
+
+#accordion-open-heading-3.opened .accordion-circle{
+
+  background-color: #DC2626;
+  color: white;
+}
+
+#accordion-open-heading-3.opened span.nunito{
+  color: #DC2626;
+}
+/*#endregion*/
+
+/*#region Estilos do Menu Lateral Aside */
+.asideContentNav::-webkit-scrollbar {
+  width: 3px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar */
+}
+
+.asideContentNav::-webkit-scrollbar-thumb {
+  background-color: #d8d8d8; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.asideContentNav::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners */
+}
+
+body.dark .asideContentNav::-webkit-scrollbar-thumb {
+  background-color: #313131; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners */
+}
+
+body.dark .asideContentNav::-webkit-scrollbar-track {
+  background: #222222; /* Color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners */
+}
+
+body.dark aside{
+  border: none;
+}
+/*#endregion*/
+
+
+@media (min-width:768px) {
+  .accordion-circle{
+    min-width: 35px;
+    min-height: 30px;
+  }
+
+  .titleMaterial::after{
+    margin-top: 20px;
+  }
+
+
+}
+
+@media print {
+
+  /* Esconder elementos que não irão ser impressos*/
+
+  .titleMaterial{
+    margin-bottom: -1rem !important;
+  }
+
+  header{
+    margin-bottom: -1.65rem !important;
+  }
+
+  pre::-webkit-scrollbar{
+    display: none;
+  }
+
+  .descParagrah, footer, #headerLogo{
+    display: none;
+  }
+
+}
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.75rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
