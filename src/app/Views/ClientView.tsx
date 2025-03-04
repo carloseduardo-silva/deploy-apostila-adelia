@@ -229,6 +229,8 @@ export default function ClientView({ apostila, id }: ClientViewProps) {
   
   const {theme} = useTheme()
 
+  console.log(apostila)
+
   return (
     <>
       {/* Link de pular diretamente para o conteúdo principal (acessibilidade) */}
