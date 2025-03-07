@@ -362,7 +362,7 @@ export default function ClientView({ apostila, id }: ClientViewProps) {
               </div>
 
               {/* Nome da Unidade */}
-              <h2 className="my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito">
+              <h2 className={nunito.className + " my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito"}>
                 {apostila?.unit_name}
               </h2>
 
