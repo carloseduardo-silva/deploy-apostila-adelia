@@ -430,7 +430,7 @@ export default function ContentView({ apostila, id }: ClientViewProps) {
 
                 {/* Nome da Unidade */}
                 <div className="flex md:pb-1 mb-4 flex-col md:flex-row md:items-center md:justify-between" >
-                  <h2 className="my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito">
+                  <h2 className={nunito.className + " my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito"}>
                     {apostila?.unit_name.substring(apostila?.unit_name.indexOf("-") + 1) }: Conteúdo
                   </h2>
                   
