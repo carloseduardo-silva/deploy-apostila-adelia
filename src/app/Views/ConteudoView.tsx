@@ -493,7 +493,7 @@ export default function ContentView({ apostila, id }: ClientViewProps) {
               <div className="flex-1">
                
                 {/* Ajuste de padding para responsividade */}
-                <div className="flex flex-col gap-[3.5rem] md:mt-2 pb-[2rem] px-4 md:px-12 text-[18px] leading-8 text-justify">
+                <div className="flex flex-col gap-[4rem] md:mt-2 pb-[2rem] px-4 md:px-12 text-[18px] leading-8 text-justify">
                   {apostila?.content_blocks?.map((item) => (
                     <div id={`section-${item.id}`} key={item.id}>
                       {renderContentItem(item)}

@@ -446,7 +446,7 @@ export default function QuestoesView({ apostila, id }: ClientViewProps) {
                 <div className="mt-5"/>
 
                 {apostila?.reflective_questions.map((questao) =>
-                  <div className="py-5 mb-5" id={`section-${questao.id}`} key={questao.id} data-id={questao.id}
+                  <div className="py-7 mb-5" id={`section-${questao.id}`} key={questao.id} data-id={questao.id}
                   ref={(el) => {
                     sectionsRefs.current[questao.id] = el;
                   }}>
