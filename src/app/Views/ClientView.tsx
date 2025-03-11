@@ -251,7 +251,7 @@ export default function ClientView({ apostila, id }: ClientViewProps) {
           {/* Conteúdo do header */}
           <div className="relative z-10 flex h-full flex-col p-4 md:py-[2rem] md:px-[4rem] mx-auto max-w-[1600px] ">
             {/* Logo à esquerda */}
-            <div id="headerLogo" className="flex items-center p-2 mb-4 flex-col md:flex-row md:items-center md:justify-between">
+            <div id="headerLogo" className="flex items-center px-2 pb-2 pt-4 md:p-2 mb-4 flex-col md:flex-row md:items-center md:justify-between">
                 <a href={`/apostila/${id}`}>
                   <Image
                     src={theme == "dark" ? LogoWhite : Logo }
@@ -367,7 +367,7 @@ export default function ClientView({ apostila, id }: ClientViewProps) {
               </h2>
 
               {/* Objetivos */}
-              <div className="mt-7 flex w-full flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+              <div className="mt-6 flex w-full flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                                
                 <div id="accordion-open" data-accordion="open">
 
@@ -384,7 +384,7 @@ export default function ClientView({ apostila, id }: ClientViewProps) {
                     </button>
                   </h2>
                   <div id="accordion-open-body-1" className="open" aria-labelledby="accordion-open-heading-1">
-                    <div className="p-5  border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                    <div className="p-5  border-b-0 border-gray-200 dark:border-gray-700">
                       <p className="mb-2 text-gray-800 md:pl-2 dark:text-gray-400">
                         <div className="leading-7 md:text-[18px]">
                             {cleanHtml(apostila?.specific_objectives)}
