@@ -26,12 +26,19 @@ body{
   cursor: pointer;
   transition: 200ms;
   transform: scale(1.07);
+
+
+}
+
+#specific_objectives_list ul{
+  list-style-type: disc !important;
+
 }
 /*#endregion*/
 
 /*#region Estilos do DarkMode */
 .dark{
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: white ;
 }
 
@@ -80,12 +87,37 @@ body.dark li::marker, body.dark ol li{
   margin-bottom: 8px;
 }
 
+.summaryCard {
+  border-top-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  margin: 16px; 
+  transition: transform 0.2s; 
+  width: 100%;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px); 
+}
+
+.summaryCard h2 {
+  font-weight: bold;
+  font-size: 1.5rem; 
+  margin-bottom: 12px; 
+}
+
+
+
 body.dark .summaryCard div p{
   color: white;
   
 }
 
 body.dark .leading-8 p{
+  color: white;
+}
+
+body.dark .leading-8 li{
   color: white;
 }
 
@@ -338,6 +370,10 @@ body.dark aside{
   }
 
   .descParagrah, footer, #headerLogo{
+    display: none;
+  }
+
+  #menusContainer{
     display: none;
   }
 

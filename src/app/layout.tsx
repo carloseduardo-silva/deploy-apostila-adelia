@@ -1,18 +1,23 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "./context/ThemeContext";
-import Head from "next/head";
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from 'next';
+import { Inter, Nunito } from 'next/font/google';
+import React from 'react';
+
+import { ThemeProvider } from './context/ThemeContext';
+
+const inter = Inter({ subsets: ['latin'] });
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '800', '900'],
+});
 
 export const metadata: Metadata = {
-  title: "Apostila Editora Capro",
-  description: "Material Didático da Editora Capro",
-  icons:{
-    icon:"/assets/book-icon.png"
-  }
-  
+  title: 'Apostila Editora Capro',
+  description: 'Material Didático da Editora Capro',
+  icons: {
+    icon: '/assets/book-icon.png',
+  },
 };
 
 export default function RootLayout({
@@ -23,16 +28,7 @@ export default function RootLayout({
   return (
     <ThemeProvider>
       <html lang="pt-BR">
-
-        <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com"/>
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""/>
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"></link>
-        </Head>
-
-        <body className={inter.className}>{children}
-        </body>
-        
+        <body className={inter.className + nunito}>{children}</body>
       </html>
     </ThemeProvider>
   );

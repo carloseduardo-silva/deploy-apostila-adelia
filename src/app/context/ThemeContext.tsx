@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 // context/ThemeContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -12,7 +12,9 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
-    document.body.className = theme; // aplicar classe do tema ao body
+    document.body.className = theme;
   }, [theme]);
 
   const toggleTheme = () => {

@@ -1,192 +1,40 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import Image from "next/image";
-import {
-  Brain,
-  ChevronUp,
-  CloudDownload,
-  Lightbulb,
-  Printer,
-} from "lucide-react";
+import { Icon } from '@iconify/react';
+import { CloudDownload, Lightbulb, Printer } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-import { Icon } from "@iconify/react";
+import LogoWhite from '@/assets/Logo.png';
+import Logo from '@/assets/Logo2.png';
+import { Footer } from '@/components/footer';
+import { MenuFixed } from '@/components/menuFixed';
+import { ScrollToTopButton } from '@/components/scrollToTopButton';
+import { ToggleFontSizeBtn } from '@/components/ToggleFontSizeBtn/ToggleFontSizeBtn';
+import { ToggleThemeBtn } from '@/components/ToogleThemeBtn/toggleThemeBtn';
 
-import Link from "next/link";
+import { useTheme } from '../context/ThemeContext';
+import { ClientViewProps } from '../types/MaterialTypes';
+import { handlePrint } from '../utils/helpers';
+import { MenusConteudo } from '@/components/menusConteudo';
 
-import { Footer } from "@/components/footer";
-import { CodeBlock } from "@/components/codeBlock";
-
-import Logo from "@/assets/Logo2.png";
-import LogoWhite from "@/assets/Logo.png"
-
-import { Roboto, Nunito } from 'next/font/google';
-import { ToggleThemeBtn } from "@/components/ToogleThemeBtn/toggleThemeBtn";
-import { useTheme } from "../context/ThemeContext";
-import { ToggleFontSizeBtn } from "@/components/ToggleFontSizeBtn/ToggleFontSizeBtn";
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-});
-
-const nunito = Nunito({
-  subsets: ['latin'],
-  weight: ['400', '800'],
-});
-
-
-
-/* ------------------------------------------------------------------
-   New Types
------------------------------------------------------------------- */
-
-export interface ClientViewProps {
-  apostila: Apostila;
-  id:string
-}
-
-export interface Apostila {
-  tags: any
-  video_transcript: any
-  createdAt: string
-  updatedAt: string
-  publishedAt: string
-  unit_name: string
-  learning_objectives: string
-  specific_objectives: string
-  audio_script: any
-  course: Course
-  subject: Subject
-  content_blocks: ContentBlock[]
-  mind_map: MindMap
-  additional_content: AdditionalContent[]
-  reflective_questions: ReflectiveQuestion[]
-  summary: Summary[]
-}
-
-export interface Course {
-  data: Data
-}
-
-export interface Data {
-  id: number
-  attributes: Attributes
-}
-
-export interface Attributes {
-  Nome: string
-  createdAt: string
-  updatedAt: string
-  publishedAt: string
-}
-
-export interface Subject {
-  data: Data2
-}
-
-export interface Data2 {
-  id: number
-  attributes: Attributes2
-}
-
-export interface Attributes2 {
-  Nome: string
-  createdAt: string
-  updatedAt: string
-  publishedAt: string
-}
-
-export interface ContentBlock {
-  id: number
-  body_text: string
-  title: string
-  type: string
-}
-
-export interface MindMap {
-  data: any
-}
-
-export interface AdditionalContent {
-  id: number
-  body_text: string
-  title: string
-  type: string
-}
-
-export interface ReflectiveQuestion {
-  id: number
-  body_text: string
-}
-
-export interface Summary {
-  id: number
-  title: string
-  body_text: string
-}
-
-
-function ScrollToTopButton() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShow(window.scrollY > 300);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  if (!show) return null;
-
-  return (
-     <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-5 right-5 z-50 rounded-full bg-red-600 p-3 shadow-lg transition hover:hover:bg-red-700"
-          aria-label="Voltar ao topo"
-          
-        >
-          <ChevronUp className="h-5 w-5 text-white" aria-hidden="true" />
-        </button>
-  );
-}
-
-function menuFixed(){
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShow(window.scrollY > 400);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  if (!show) return true;
-  
-
-}
-
-function handlePrint(){
-  window.print()
-}
-
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
-
-export default function MindMapView({ apostila, id }: ClientViewProps) {
+export default function MindMapView({ apostila, tag }: ClientViewProps) {
+  const { theme } = useTheme();
+  const API_URL = process.env.API_URL;
 
   const mapaMentalUrl = apostila?.mind_map?.data?.attributes?.url
-    ? `https://apimaterial.sistemaeditoracapro.com.br${apostila?.mind_map.data.attributes.url}`
-    : "";
+    ? `${API_URL}${apostila?.mind_map.data.attributes.url}`
+    : '';
 
-    const {theme} = useTheme();
+    const openImage = () =>{
+      //abrir em uma nova janela
+      window.open(mapaMentalUrl, '_blank');
 
+    }
 
   return (
     <>
-      {/* Link de pular diretamente para o conteúdo principal (acessibilidade) */}
       <a
         href="#mainContent"
         className="absolute left-[-999px] top-[-999px] z-50 bg-white p-2 text-sm text-black focus:left-2 focus:top-2"
@@ -195,169 +43,157 @@ export default function MindMapView({ apostila, id }: ClientViewProps) {
       </a>
 
       <main className="flex h-full w-full flex-col min-h-[100vh]">
-
-        {/* ----------------------------------------------------------------
-            Cabeçalho (fundo + overlay + logo à esquerda + objetivos)
-        ---------------------------------------------------------------- */}
         <header className="relative flex  w-full flex-col text-black mb-1">
+          <div className="relative z-10 flex h-full flex-col p-4 md:py-[2rem] md:px-[4rem]  mx-auto w-full max-w-[2000px]">
+            <div
+              id="headerLogo"
+              className="flex items-center p-2 mb-4 flex-col md:flex-row md:items-center md:justify-between"
+            >
+              <a href={`/apostila/${tag}`}>
+                <Image
+                  src={theme == 'dark' ? LogoWhite : Logo}
+                  alt="logo do curso"
+                  width={120}
+                  aria-hidden="true"
+                />
+              </a>
 
-            {/* Conteúdo do header */}
-            <div className="relative z-10 flex h-full flex-col p-4 md:py-[2rem] md:px-[4rem]  mx-auto w-full max-w-[2000px]">
-            
-            {/* Logo à esquerda */}
-              <div id="headerLogo" className="flex items-center p-2 mb-4 flex-col md:flex-row md:items-center md:justify-between">
-                <a href={`/apostila/${id}`}>
-                  <Image
-                    src={theme == "dark" ? LogoWhite : Logo }
-                    alt="logo do curso"
-                    width={120}
-                    aria-hidden="true"
-                  />
-                </a>
-                
-                  {
-                      menuFixed() ? 
-                      (<div className="mt-[2rem] gap-3 md:gap-2 flex flex-row space-x-4 md:mt-0" >
-                        <ToggleFontSizeBtn/>
-                       
-                        <button
-                          type="button"
-                          className="flex cursor-pointer items-center"
-                          aria-label="Avaliar conteúdo"
-                        >
-                          <Lightbulb
-                            className="mr-1"
-                            width={15}
-                            aria-hidden="true"
-                            
-                          />
-                          <span className="text-sm">Avaliar</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="flex cursor-pointer items-center"
-                          aria-label="Baixar conteúdo"
-                        >
-                          <CloudDownload
-                            className="mr-1"
-                            width={15}
-                            aria-hidden="true"
-                          />
-                          <span className="text-sm">Baixar</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="md:flex cursor-pointer items-center hidden"
-                          aria-label="Imprimir conteúdo"
-                          onClick={handlePrint}
-                        >
-                          <Printer
-                            className="mr-1"
-                            width={15}
-                            aria-hidden="true"
-                          />
-                          <span className="text-sm">Imprimir</span>
-                        </button>
-                        <ToggleThemeBtn/>
-                      </div>): ( <div id="menuFixedMobile" className="md:hidden z-[10] fixed top-[0] flex flex-row items-center justify-center space-x-4 mt-0 p-4 gap-4 bg-white w-full" >
-                      <ToggleFontSizeBtn/>
-                     
-                      <button
-                        type="button"
-                        className="flex cursor-pointer items-center"
-                        aria-label="Avaliar conteúdo"
-                      >
-                        <Lightbulb
-                          className="mr-1"
-                          width={15}
-                          aria-hidden="true"
-                          
-                        />
-                        <span className="text-sm">Avaliar</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="flex cursor-pointer items-center"
-                        aria-label="Baixar conteúdo"
-                      >
-                        <CloudDownload
-                          className="mr-1"
-                          width={15}
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm">Baixar</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="md:flex cursor-pointer items-center hidden"
-                        aria-label="Imprimir conteúdo"
-                        onClick={handlePrint}
-                      >
-                        <Printer
-                          className="mr-1"
-                          width={15}
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm">Imprimir</span>
-                      </button>
-                      <ToggleThemeBtn/>
-                    </div>)
-                  }
-                  
+              {MenuFixed() ? (
+                <div className="mt-[2rem] gap-3 md:gap-2 flex flex-row space-x-4 md:mt-0">
+                  <ToggleFontSizeBtn />
+
+                  <button
+                    type="button"
+                    className="flex cursor-pointer items-center"
+                    aria-label="Avaliar conteúdo"
+                  >
+                    <Lightbulb className="mr-1" width={15} aria-hidden="true" />
+                    <span className="text-sm">Avaliar</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="flex cursor-pointer items-center"
+                    aria-label="Baixar conteúdo"
+                  >
+                    <CloudDownload
+                      className="mr-1"
+                      width={15}
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm">Baixar</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="md:flex cursor-pointer items-center hidden"
+                    aria-label="Imprimir conteúdo"
+                    onClick={handlePrint}
+                  >
+                    <Printer className="mr-1" width={15} aria-hidden="true" />
+                    <span className="text-sm">Imprimir</span>
+                  </button>
+                  <ToggleThemeBtn />
+                </div>
+              ) : (
+                <div
+                  id="menuFixedMobile"
+                  className="md:hidden z-[10] fixed top-[0] flex flex-row items-center justify-center space-x-4 mt-0 p-4 gap-4 bg-white w-full"
+                >
+                  <ToggleFontSizeBtn />
+
+                  <button
+                    type="button"
+                    className="flex cursor-pointer items-center"
+                    aria-label="Avaliar conteúdo"
+                  >
+                    <Lightbulb className="mr-1" width={15} aria-hidden="true" />
+                    <span className="text-sm">Avaliar</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="flex cursor-pointer items-center"
+                    aria-label="Baixar conteúdo"
+                  >
+                    <CloudDownload
+                      className="mr-1"
+                      width={15}
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm">Baixar</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="md:flex cursor-pointer items-center hidden"
+                    aria-label="Imprimir conteúdo"
+                    onClick={handlePrint}
+                  >
+                    <Printer className="mr-1" width={15} aria-hidden="true" />
+                    <span className="text-sm">Imprimir</span>
+                  </button>
+                  <ToggleThemeBtn />
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3 flex w-full flex-col md:mt-5">
+              <div className="md:mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
+                <div className="md:text-sm text-[0.8rem] roboto subtitle-main">
+                  {apostila?.course?.data?.attributes?.Nome || ''}
+                </div>
               </div>
 
-              {/* Título e Botões */}
-              <div className="mt-3 flex w-full flex-col md:mt-5">
-                {/* Linha: Nome do Curso + botões */}
-                <div className="md:mb-2 flex flex-col md:mb-0 md:flex-row md:items-center md:justify-between">
-                  <div className="md:text-sm text-[0.8rem] roboto subtitle-main">
-                    {apostila?.course?.data?.attributes?.Nome || ""}
-                  </div>
-    
-                </div>
+              <div className="flex md:pb-1 mb-4 flex-col md:flex-row md:items-center md:justify-between">
+                <h2 className="my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito">
+                  {apostila?.unit_name}
+                  : Mapa Mental
+                </h2>
 
-                {/* Nome da Unidade */}
-                <div className="flex md:pb-1 mb-4 flex-col md:flex-row md:items-center md:justify-between" >
-                  <h2 className={nunito.className + " my-3 text-[1.65rem] font-bold md:text-[37px] title-red nunito"}>
-                    {apostila?.unit_name.substring(apostila?.unit_name.indexOf("-") + 1) }: Mapa Mental
-                  </h2>
-                  
-                  <Link className="hidden md:flex" href={`/apostila/${id}/`}> <Icon style={{color:"#AAB2C8", fontSize:"25px", marginBottom:"41px"}} className="iconHover" icon={"akar-icons:arrow-back"}/></Link>
-                </div>
-                
-
+                <Link className="hidden md:flex" href={`/apostila/${tag}/`}>
+                  {' '}
+                  <Icon
+                    style={{
+                      color: '#AAB2C8',
+                      fontSize: '25px',
+                      marginBottom: '41px',
+                    }}
+                    className="iconHover"
+                    icon={'akar-icons:arrow-back'}
+                  />
+                </Link>
               </div>
             </div>
+          </div>
         </header>
 
-        <div className="flex-1 mt-3 flex flex-1 flex-col items-center justify-center text-center md:pt-5 md:px-4 px-2" id="mainContent">
-                
-              <div className=" text-center text-[19px] px-4 mb-1 md:mb-5">
-                 <p className="descParagrah" style={{color:"rgb(124, 122, 128)"}}>
-                  Os mapas mentais facilitam a organização de informações.
-                 </p>
-              </div>
+        <div
+          className="flex-1 mflex flex-col items-center justify-center text-center md:pt-5 px-2"
+          id="mainContent"
+        >
+          <div className=" text-center text-[18px] md:text-[20px] px-4 mb-1 md:mb-5">
+            <p className="descParagrah" style={{ color: 'rgb(124, 122, 128)' }}>
+              Os mapas mentais facilitam a organização de informações.
+            </p>
+          </div>
 
-            {mapaMentalUrl ? (
-              <div className="relative mx-auto mt-5 pb-[5rem] w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl">
-                <Image
-                  src={mapaMentalUrl}
-                  alt="Mapa Mental desta unidade"
-                  width={4000}
-                  height={2200}
-                  className="mx-auto object-contain rounded-xl"
-                />
-              </div>
-              
-            ) : (
-              <p className="mt-3 text-sm">Mapa mental não disponível.</p>
-            )}
+          {mapaMentalUrl ? (
+            <div className="relative mx-auto mt-5 pb-[4rem] w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl">
+              <Image
+                src={mapaMentalUrl}
+                alt="Mapa Mental desta unidade"
+                width={4000}
+                height={2200}
+                className="mx-auto object-contain rounded-xl"
+                onClick={() => openImage()}
+              />
+            </div>
+          ) : (
+            <p className="mt-3 pt-5 text-sm">Mapa mental não disponível.</p>
+          )}
         </div>
 
-        {/* Footer */}
+        <MenusConteudo tag={tag} hiddenCard='mapa-mental'/>
+
         <Footer />
 
-        {/* Scroll to Top Button */}
         <ScrollToTopButton />
       </main>
     </>
